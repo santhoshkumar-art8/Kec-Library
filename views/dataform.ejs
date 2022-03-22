@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database</title>
+     <!-- bootstrap 4 css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- google font -->
+  <link href="https://fonts.googleapis.com/css?family=Public+Sans:300,500&display=swap" rel="stylesheet">
+    <style>
+        body {
+  font: 300 14px/1.2 'Public Sans', sans-serif;
+}
+
+.container-fluid {
+  max-width: 1024px;
+}
+
+#auth{
+  opacity: 0.5;
+}
+
+.gap{
+   height: 100px;
+}
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-3">
+        <h1>Student Registered Details</h1><br><br>
+     <!-- responsive table -->
+     <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr class="table-info">
+              <th scope="col">Name </th>
+              <th scope="col">Email</th>
+              <th scope="col">Book Name</th>
+              <th scope="col">DueDate to collect</th>
+             <th scope="col">DueDate to return</th>
+             <th scope="col">Department</th>
+             <th scope="col">rollnumber</th>
+             <th scope="col">Mobile mumber</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+          <% for(var i=0;i<data.length;i++){ %>
+            <tr>
+                <td><%=data[i].name%></td>
+                <td><%=data[i].email%></td>
+                <td><%=data[i].book%></td>
+                <td><%=data[i].collectdate%></td>
+                <td><%=data[i].duedate%></td>
+                <td><%=data[i].dept%></td>
+                <td><%=data[i].rollnum%></td>
+                <td><%=data[i].mobile%></td>
+                
+              </tr> 
+          <% }%>
+
+         
+              
+
+              
+          </tbody>
+        </table>
+        
+      </div>
+      
+    </div>
+    <center>
+        <div class="gap">
+
+        </div>
+    <a href="/admin" class="btn btn-outline-dark btn-lg my-5 mx-3" >Home</a>
+</center>
+</body>
+</html>

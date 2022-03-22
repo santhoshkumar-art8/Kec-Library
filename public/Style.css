@@ -369,3 +369,8 @@ footer .column i + i {
   z-index: 9999;
   transition: all 1.5s ease;
 }
+
+img{
+  height: 100%;
+  width: 100%;
+}

@@ -34,7 +34,7 @@
     <div class="container-fluid p-0">
       <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="/">
-          <i class="fas fa-book-reader fa-2x mx-3"></i>Treasure Chest</a>
+          <i class="fas fa-book-reader fa-2x mx-3"></i>KEC Library</a>
         
         <div class="collapse navbar-collapse" id="navbarNav">
           <div class="mr-auto"></div>
@@ -47,10 +47,10 @@
    <div class="container-fluid mt-3 ">
         
   <strong><h2 class="data"><%=data.bname%></h2>
-    <h4 class="data">PPRICE : <%=data.price%> ₹</h4></strong>
-    <b><h6 class="data">BOOK HOLDER : <%=data.name%></h6>
-    <h6  class="data" style="cursor: pointer;">MOBILE NUMBER : <%=data.num%></h6>
-    <h6  class="data" style="cursor: pointer;">MAIL ID : <%=data.email%></h6></b>
+    <h4 class="data"> Author Name : <%=data.name%></h4></strong>
+    <b><h6 class="data">PPRICE : <%=data.price%> ₹</h6>
+    <h6  class="data" style="cursor: pointer;">Published Year : <%=data.num%></h6>
+    <h6  class="data" style="cursor: pointer;">Total Pages : <%=data.email%></h6></b>
         <%for(var i=0;i<1;i++){%>
             <div class="card-img-overlay">
 
@@ -60,7 +60,7 @@
              
                 </div>
                 <div class="col-pic col-lg-6 data">
-                   <div class="card bg-dark text-white" style=" width: 300px; height: 340px;" >
+                   <div class="card bg-dark text-white" style=" width: 300px; height: 460px;" >
             
               <div id="carouselExampleControls" class="carousel slide card-body" data-bs-ride="carousel" data-pause="hover" data-interval="100">
               <div class="carousel-inner">
@@ -90,7 +90,10 @@
       </div>
     </section> 
     <center>
-    <button onclick="window.location.href='/#books'" class="btn btn-dark bgap"><i class="fas fa-arrow-left"> BACK</i></button>
+      
+      <button onclick="window.location.href='/booking'" class="btn btn-dark bgap"><i class="fas fa-arrow-left">Willing</i></button>
+   
+    <button onclick="window.location.href='/admin#books'" class="btn btn-dark bgap"><i class="fas fa-arrow-left"> BACK</i></button>
   </center>
 </body>
 </html>

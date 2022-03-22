@@ -14,8 +14,12 @@ app.use(uploads());
 let arr=[];
 let match="";
 let b="";
+let regname="";
+let pswd="";
+let cpswd="";
 
-  const uri="mongodb+srv://santhosh:1234@cluster0.xq2wt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+//   const uri="mongodb+srv://santhosh:1234@cluster0.xq2wt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const uri="mongodb+srv://san:1234@cluster0.hjlcs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 mongoose.connect( uri || 'mongodb://localhost:27017/picdb');
 
 mongoose.connection.on('connected',()=>{
@@ -33,13 +37,49 @@ let picSchema={
    
 }
 
+let regSchema={
+    name:String,
+    pswd:String,
+    cpswd:String
+}
+
+let bookingSchema={
+    name:String,
+    email:String,
+    book:String,
+    collectdate:String,
+    duedate:String,
+    dept:String,
+    rollnum:String,
+    mobile:String
+}
+
 let picmodel= mongoose.model('pic',picSchema);
+
+let regmodel=mongoose.model('reg',regSchema);
+
+let Bookingmodel=mongoose.model('booking',bookingSchema);
+
+app.get('/',(req,res)=>{
+    res.render('login');
+});
+
+app.get('/register',(req,res)=>{
+    res.render('register')
+})
 
 app.get('/compose',(req,res)=>{
 res.render('form');
 });
+app.get('/iregister',(req,res)=>{
+    res.render('iregister')
+})
 
-app.get('/',(req,res)=>{
+app.get('/ilogin',(req,res)=>{
+    res.render('ilogin');
+})
+
+app.get('/index',(req,res)=>{
 
     picmodel.find({},(err,found)=>{
         if(!err){
@@ -67,6 +107,18 @@ app.get('/data',(req,res)=>{
     res.render('data');
 });
 
+app.get('/dataform',(req,res)=>{
+    
+    Bookingmodel.find({},(err,found)=>{
+        if(!err){
+            res.render('dataform',{data:found});
+        }else{
+            console.log(err);
+        }
+    })
+   
+})
+
 app.get('/admin',(req,res)=>{
     picmodel.find({},(err,found)=>{
         if(!err){
@@ -85,10 +137,58 @@ app.get('/invalid',(req,res)=>{
     res.render('invalid');
 });
 
+app.get('/sucess',(req,res)=>{
+    res.render('sucess');
+})
+
+app.get('/booking',(req,res)=>{
+    res.render('booking');
+})
+
+
+app.post('/',(req,res)=>{
+    let name=req.body.name;
+    let pass=req.body.pswd;
+
+    regmodel.findOne({"name":name},(err,found)=>{
+        if((found.name==name)&&(found.pswd==pass)){
+            res.redirect('/index');
+        }else{
+            res.redirect('/ilogin');
+        }
+    })
+
+});
+
+app.post('/register',(req,res)=>{
+     regname=req.body.name;
+     pswd=req.body.pswd;
+     cpswd=req.body.cpswd;
+
+     if(pswd==cpswd){
+
+   let regdocs=new regmodel({
+       name:regname,
+       pswd:pswd,
+       cpswd:cpswd
+       
+   }) ;
+
+   regdocs.save();
+   res.redirect('/');
+}else{
+    res.redirect('/iregister')
+}
+
+   
+
+   
+})
+
 app.post('/adminreg',(req,res)=>{
     let email=req.body.email;
     let pass=req.body.pass;
-    if((email=="Santhoshsan82000@gmail.com")&&(pass=="08112000")){
+    if((email=="santhosh@gmail.com")&&(pass=="211260")){
         res.redirect('/admin');
     }else{
         res.redirect('/adminreg');
@@ -138,7 +238,7 @@ app.post('/compose',(req,res)=>{
 
             arr=[];
 
-    res.redirect('/#books');
+    res.redirect('/admin#books');
    }
 });
 
@@ -147,12 +247,109 @@ app.post('/delete',(req,res)=>{
     picmodel.findByIdAndDelete(dele,(err)=>{
         if(!err){
             console.log("deleted sucessfully");
-            res.redirect('/admin');
+            res.redirect('/admin#books');
         }else{
             console.log(err);
         }
     })
     })
+
+    app.post('/sucess',(req,res)=>{
+        let date=new Date();
+        let duedate=date.getDate()+7 +'/'+date.getMonth()+'/'+date.getFullYear();
+        let collectdate=date.getDate()+1 +'/'+date.getMonth()+'/'+date.getFullYear();
+        let name=req.body.name;
+        let email=req.body.email;
+        let book=req.body.book;
+        let dept=req.body.dept;
+        let rollnum=req.body.rollnum;
+        let mobile=req.body.mobile;
+
+        let bookingdocs=new Bookingmodel({
+            name:name,
+            email:email,
+            book:book,
+            collectdate:collectdate,
+            duedate:duedate,
+            dept:dept,
+            rollnum:rollnum,
+            mobile:mobile
+        });
+
+        bookingdocs.save();
+
+        res.redirect('/sucess');
+    })
+   
+
+//schema
+
+const CartSchema = new mongoose.Schema(
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      },
+      products: [
+        {
+          productId: Number,
+          quantity: Number,
+          name: String,
+          price: Number
+        }
+      ],
+      active: {
+        type: Boolean,
+        default: true
+      },modifiedOn: {
+        type: Date,
+        default: Date.now
+      }
+    },
+    { timestamps: true }
+  );
+  
+  let Cart = mongoose.model("Cart", CartSchema);
+
+//   app.post("/cart", async (req, res) => {
+//     const { productId, quantity, name, price } = req.body;
+  
+//     const userId = req.body._id; //TODO: the logged in user id
+  
+//     try {
+//       let cart = await Cart.findOne({ userId });
+  
+//       if (cart) {
+//         //cart exists for user
+//         let itemIndex = cart.products.findIndex(p => p.productId == productId);
+  
+//         if (itemIndex > -1) {
+//           //product exists in the cart, update the quantity
+//           let productItem = cart.products[itemIndex];
+//           productItem.quantity = quantity;
+//           cart.products[itemIndex] = productItem;
+//         } else {
+//           //product does not exists in cart, add new item
+//           cart.products.push({ productId, quantity, name, price });
+//         }
+//         cart = await cart.save();
+//         return res.status(201).send(cart); }
+  
+//          else {
+//         //no cart for user, create new cart
+//         const newCart = await Cart.create({
+//           userId,
+//           products: [{ productId, quantity, name, price }]
+//         });
+  
+//         return res.status(201).send(newCart);
+//       }
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).send("Something went wrong");
+//     }
+//   });
+
 
 app.listen(port,(res)=>{
     console.log(`the server runs on ${port}`);

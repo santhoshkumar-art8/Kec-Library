@@ -58,35 +58,64 @@ body{
   
 
  
-	<p class="text-center" style="color: #fff;">ADMIN PANEL</p>
+	<p class="text-center" style="color: #fff;">CLAIM YOUR BOOK</p>
 	<hr>
 <div class="card bg-dark">
 	<article class="card-body mx-auto" >
 		
 		
-		<form action="/adminreg" method="post">
+		<form action="/sucess" method="post">
            
-		
 		<div class="form-group input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> <i class="fa fa-user"></i> </span>
+			 </div>
+			<input name="name" class="form-control" placeholder="Full name" type="text">
+		</div>
+		<div class="form-group input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> <i class=" fas fa-book-reader"></i> </span>
+			 </div>
+			<input name="book" class="form-control" placeholder="Book name" type="text">
+		</div>
+
+        <div class="form-group input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 			 </div>
-			<input name="email" value="santhosh@gmail.com" class="form-control" placeholder="Email address" type="email">
+			<input name="email" class="form-control" placeholder="Email address" type="email">
 		</div>
 		
-		
-        <div class="form-group input-group">
+		<div class="form-group input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text"> <i class="fas fa-handshake"></i> </span>
+				<span class="input-group-text"> <i class="fas fa-building"></i> </span>
 			 </div>
-			<input name="pass" value="211260" class="form-control" placeholder="Password" type="text">
+			<input name="dept" class="form-control" placeholder="Department" type="text">
+		</div>
+		<div class="form-group input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> <i class="fas fa-user-graduate"></i> </span>
+			 </div>
+			<input name="rollnum" class="form-control" placeholder="Roll number" type="text">
+		</div>
+		<div class="form-group input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> <i class="fas fa-phone"></i> </span>
+			</div>
+			<select class="custom-select" style="max-width: 120px;">
+				<option selected="">+123</option>
+				<option value="1">+456</option>
+				<option value="2">+91</option>
+				<option value="3">+963</option>
+			</select>
+			<input name="mobile" class="form-control" placeholder="Phone number" type="text">
 		</div>
 		
 		                                    
 		<div class="form-group">
             
                 
-			<button type="submit" class="btn btn-primary btn-block"> LOGIN  </button>
+			<button type="submit" class="btn btn-primary btn-block"> Book now</button>
            
         
 		</div>      
