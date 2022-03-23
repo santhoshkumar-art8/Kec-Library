@@ -43,6 +43,7 @@
              <th scope="col">Department</th>
              <th scope="col">rollnumber</th>
              <th scope="col">Mobile mumber</th>
+             <th scope="col">Delete</th>
              
             </tr>
           </thead>
@@ -57,6 +58,12 @@
                 <td><%=data[i].dept%></td>
                 <td><%=data[i].rollnum%></td>
                 <td><%=data[i].mobile%></td>
+                <td>
+
+                  <form action="/table" method="post">
+                    <input type="checkbox" name="checkbox" value="<%=data[i]._id%>" onchange="this.form.submit()" >  
+              </form>
+                </td>
                 
               </tr> 
           <% }%>

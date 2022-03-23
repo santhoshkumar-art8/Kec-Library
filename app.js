@@ -17,10 +17,11 @@ let b="";
 let regname="";
 let pswd="";
 let cpswd="";
+let rollnum="";
 
 //   const uri="mongodb+srv://santhosh:1234@cluster0.xq2wt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-const uri="mongodb+srv://san:1234@cluster0.hjlcs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-mongoose.connect( uri || 'mongodb://localhost:27017/picdb');
+ const uri="mongodb+srv://san:1234@cluster0.hjlcs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+mongoose.connect(  uri ||'mongodb://localhost:27017/picdb');
 
 mongoose.connection.on('connected',()=>{
     console.log("mongoDb connected");
@@ -138,7 +139,14 @@ app.get('/invalid',(req,res)=>{
 });
 
 app.get('/sucess',(req,res)=>{
-    res.render('sucess');
+    Bookingmodel.findOne({"rollnum":rollnum},(err,found)=>{
+        if(!err){
+            res.render('sucess',{data1:found});
+        }else{
+            console.log(err);
+        }
+    })
+   
 })
 
 app.get('/booking',(req,res)=>{
@@ -151,7 +159,7 @@ app.post('/',(req,res)=>{
     let pass=req.body.pswd;
 
     regmodel.findOne({"name":name},(err,found)=>{
-        if((found.name==name)&&(found.pswd==pass)){
+        if((found.name==name)&&(found.cpswd==pass)){
             res.redirect('/index');
         }else{
             res.redirect('/ilogin');
@@ -159,6 +167,18 @@ app.post('/',(req,res)=>{
     })
 
 });
+
+app.post('/table',(req,res)=>{
+    let dele=req.body.checkbox;
+    Bookingmodel.findByIdAndDelete(dele,(err)=>{
+        if(!err){
+            console.log("daleted sucessfully");
+            res.redirect('/dataform');
+        }else{
+            console.log(err);
+        }
+    })
+})
 
 app.post('/register',(req,res)=>{
      regname=req.body.name;
@@ -262,7 +282,7 @@ app.post('/delete',(req,res)=>{
         let email=req.body.email;
         let book=req.body.book;
         let dept=req.body.dept;
-        let rollnum=req.body.rollnum;
+         rollnum=req.body.rollnum;
         let mobile=req.body.mobile;
 
         let bookingdocs=new Bookingmodel({
